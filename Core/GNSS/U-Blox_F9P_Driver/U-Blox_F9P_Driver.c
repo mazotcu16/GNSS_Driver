@@ -144,7 +144,7 @@ void U_Blox_Send_Packet() {
 	}
 }
 void U_Blox_Send_Data(uint8_t data) {
-	HAL_UART_Transmit(&huart3, &data, 1, 100);
+	HAL_UART_Transmit(&huart3, &data, 1, 10);
 }
 void U_Blox_Get_Package(U_Blox_frame_high_layer *U_Blox_frame_high_layer_t) {
 	U_Blox_frame_low_layer *U_Blox_frame_low_layer_t =

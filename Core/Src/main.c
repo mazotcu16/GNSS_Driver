@@ -112,12 +112,12 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 	    GNSS_Gorev(&GNSS_t);
-	    if(GNSS_Veri_Al(&GNSS_t))
-	    {
+	    //if(GNSS_Veri_Al(&GNSS_t))
+	    //{
 	    	//HAL_UART_Transmit(&huart3, (uint8_t*)("Yil"), 3, 1000);
 	    	//HAL_UART_Transmit(&huart3, (uint8_t*)&GNSS_t.yil, 2, 1000);
-	    	a++;
-	    }
+	    //	a++;
+	    //}
   }
   /* USER CODE END 3 */
 }

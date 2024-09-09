@@ -8,11 +8,16 @@
 #ifndef GNSS_GNSS_H_
 #define GNSS_GNSS_H_
 #include "stdint.h"
+typedef struct{
+ uint32_t veri_gelmedi;
+ uint32_t veri_geldi;
+}İstatistikler;
 typedef struct
 {
 	uint16_t yil;
 	uint8_t ay;
 	uint8_t gun;
+	uint8_t saat;
 	uint8_t dakika;
 	uint8_t saniye;
 	int32_t boylam;
@@ -20,8 +25,11 @@ typedef struct
 	enum{
 		SM_GNSS_IDLE=0,
 		SM_GNSS_WAIT_FOR_REPLY,
-		SM_GNSS_NO_REPLY
+		SM_GNSS_NO_REPLY,
+		SM_GNSS_SEND
 	}SM;
+	uint8_t onceki_durum;
+	İstatistikler İstatistikler_t;
 }GNSS;
 
 

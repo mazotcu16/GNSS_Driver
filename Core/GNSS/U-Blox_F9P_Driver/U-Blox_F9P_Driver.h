@@ -11,9 +11,11 @@
 #include <stdint.h>
 
 #define UBX_MESSAGE_CLASS_CFG 0x06
+#define UBX_MESSAGE_CLASS_ACK 0x05
 #define UBX_MESSAGE_CLASS_NAV 0x01
 #define UBX_MESSAGE_ID_PRT    0x00
 #define UBX_MESSAGE_ID_PVT    0x07
+#define UBX_MESSAGE_ID_ACK    0x01
 #define UBX_CFG_PRT_LEN       20
 #define UBX_
 typedef union {
