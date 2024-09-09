@@ -99,7 +99,7 @@ int main(void)
   HAL_UART_Receive_IT(&huart3, &data,1);
   HAL_GPIO_WritePin(GPIOB,GPIO_PIN_14,1);
   HAL_GPIO_WritePin(GPIOE,GPIO_PIN_1,1);
-  GNSS_Tanimla();
+  GNSS_Tanimla(&GNSS_t);
   //U_Blox_frame.payload
   //data_arr[0]=U_Blox_frame.payload.U_Blox_Payload_Cfg_Prt_t.baudrate;
   /* USER CODE END 2 */
@@ -111,7 +111,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	    GNSS_Gorev();
+	    GNSS_Gorev(&GNSS_t);
 	    if(GNSS_Veri_Al(&GNSS_t))
 	    {
 	    	//HAL_UART_Transmit(&huart3, (uint8_t*)("Yil"), 3, 1000);

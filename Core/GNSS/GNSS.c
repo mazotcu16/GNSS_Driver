@@ -11,7 +11,7 @@ U_Blox_frame_high_layer U_Blox_frame_tx;
 U_Blox_frame_high_layer U_Blox_frame_rx;
 int b=0;
 static uint32_t zaman;
-void GNSS_Tanimla() {
+void GNSS_Tanimla(GNSS *GNSS_t) {
 	U_Blox_Init();
 	for (int i = 0; i < 26; i++) {
 		U_Blox_frame_tx.payload.data[i] = 0;
@@ -43,6 +43,7 @@ void GNSS_Tanimla() {
 	}
 	U_Blox_Send_Frame();
 	//while(!U_Blox_Is_Packet_Ready());
+	GNSS_t->SM=SM_GNSS_WAIT_FOR_REPLY;
 	zaman=SystickGetMs();
 }
 uint8_t GNSS_Veri_Al(GNSS *GNSS_t) {
@@ -90,6 +91,6 @@ uint8_t GNSS_Veri_Al(GNSS *GNSS_t) {
 	}
 }
 
-void GNSS_Gorev() {
+void GNSS_Gorev(GNSS *GNSS_t) {
 	U_Blox_Task();
 }

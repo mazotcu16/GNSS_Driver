@@ -26,9 +26,9 @@ typedef struct
 
 
 
-void GNSS_Tanimla();
+void GNSS_Tanimla(GNSS *GNSS_t);
 uint8_t GNSS_Veri_Al(GNSS *GNSS_t);
 uint8_t GNSS_Send_Command(GNSS *GNSS_t);
-void GNSS_Gorev();
+void GNSS_Gorev(GNSS *GNSS_t);
 
 #endif /* GNSS_GNSS_H_ */
