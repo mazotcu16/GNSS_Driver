@@ -42,7 +42,7 @@ static struct {
 
 void U_Blox_Init() {
 	U_Blox_Rx.Sm = SM_RX_IDLE;
-	U_Blox_Tx.Sm=SM_TX_IDLE;
+	U_Blox_Tx.Sm = SM_TX_IDLE;
 }
 void U_Blox_Task() {
 	U_Blox_frame_low_layer *U_Blox_frame_low_layer_t;
@@ -53,13 +53,11 @@ void U_Blox_Task() {
 		break;
 	case SM_TX_SEND:
 		U_Blox_frame_low_layer_t = (U_Blox_frame_low_layer*) U_Blox_Tx.Buffer;
-		while (U_Blox_Tx.buffer_index < U_Blox_frame_low_layer_t->length + 8)
-		{
-				U_Blox_Send_Data(U_Blox_Tx.Buffer[U_Blox_Tx.buffer_index]);
+		while (U_Blox_Tx.buffer_index < U_Blox_frame_low_layer_t->length + 8) {
+			U_Blox_Send_Data(U_Blox_Tx.Buffer[U_Blox_Tx.buffer_index]);
 		}
-		if(U_Blox_Tx.buffer_index >= U_Blox_frame_low_layer_t->length + 8)
-		{
-			U_Blox_Tx.Sm=SM_TX_IDLE;
+		if (U_Blox_Tx.buffer_index >= U_Blox_frame_low_layer_t->length + 8) {
+			U_Blox_Tx.Sm = SM_TX_IDLE;
 		}
 		break;
 	}
@@ -100,7 +98,7 @@ void U_Blox_Set_Frame(U_Blox_frame_high_layer *U_blox_Frame) {
 	(*(uint16_t*) &U_Blox_frame_low_layer_transmit.payload[U_Blox_frame_low_layer_transmit.length]) =
 			U_Blox_Calculate_Checksum(&U_Blox_frame_low_layer_transmit);
 	memset(&U_blox_Frame->payload, 0, 500);
-	U_Blox_Tx.Sm=SM_TX_PREPARE;
+	U_Blox_Tx.Sm = SM_TX_PREPARE;
 }
 uint8_t U_Blox_Send_Frame() {
 	//paket hazır mı kontrolu gerek
@@ -135,22 +133,18 @@ uint8_t U_Blox_Is_Packet_Ready() {
 	return (U_Blox_Rx.Sm == SM_RX_PROCESS);
 }
 
-uint8_t U_Blox_Is_Packet_Ready_To_Send(void)
-{
-	return (U_Blox_Tx.Sm==SM_TX_IDLE);
+uint8_t U_Blox_Is_Packet_Ready_To_Send(void) {
+	return (U_Blox_Tx.Sm == SM_TX_IDLE);
 }
 
-void U_Blox_Send_Packet()
-{
-	if(U_Blox_Tx.Sm==SM_TX_PREPARE)
-	{
-		U_Blox_Tx.buffer_index=0;
-		U_Blox_Tx.Sm=SM_TX_SEND;
+void U_Blox_Send_Packet() {
+	if (U_Blox_Tx.Sm == SM_TX_PREPARE) {
+		U_Blox_Tx.buffer_index = 0;
+		U_Blox_Tx.Sm = SM_TX_SEND;
 	}
 }
-void U_Blox_Send_Data(uint8_t data)
-{
-	HAL_UART_Transmit(&huart3, &data,1, 100);
+void U_Blox_Send_Data(uint8_t data) {
+	HAL_UART_Transmit(&huart3, &data, 1, 100);
 }
 void U_Blox_Get_Package(U_Blox_frame_high_layer *U_Blox_frame_high_layer_t) {
 	U_Blox_frame_low_layer *U_Blox_frame_low_layer_t =
