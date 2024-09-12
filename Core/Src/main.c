@@ -42,6 +42,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 UART_HandleTypeDef huart3;
+DMA_HandleTypeDef hdma_usart3_rx;
 
 /* USER CODE BEGIN PV */
 GNSS GNSS_t;
@@ -52,6 +53,7 @@ int a=0;
 void SystemClock_Config(void);
 static void MPU_Config(void);
 static void MX_GPIO_Init(void);
+static void MX_DMA_Init(void);
 static void MX_USART3_UART_Init(void);
 /* USER CODE BEGIN PFP */
 
@@ -60,7 +62,7 @@ static void MX_USART3_UART_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 unsigned char data=0;
-
+uint8_t uart_buffer[501];
 /* USER CODE END 0 */
 
 /**
@@ -94,9 +96,11 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
-  HAL_UART_Receive_IT(&huart3, &data,1);
+  //HAL_UART_Receive_IT(&huart3, &data,1);
+  //HAL_UART_Receive_DMA(&huart3, uart_buffer, 500);
   HAL_GPIO_WritePin(GPIOB,GPIO_PIN_14,1);
   HAL_GPIO_WritePin(GPIOE,GPIO_PIN_1,1);
   GNSS_Tanimla(&GNSS_t);
@@ -112,12 +116,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 	    GNSS_Gorev(&GNSS_t);
-	    //if(GNSS_Veri_Al(&GNSS_t))
-	    //{
-	    	//HAL_UART_Transmit(&huart3, (uint8_t*)("Yil"), 3, 1000);
-	    	//HAL_UART_Transmit(&huart3, (uint8_t*)&GNSS_t.yil, 2, 1000);
-	    //	a++;
-	    //}
+	    a=DMA1_Stream0->NDTR;
   }
   /* USER CODE END 3 */
 }
@@ -225,6 +224,22 @@ static void MX_USART3_UART_Init(void)
   /* USER CODE BEGIN USART3_Init 2 */
 
   /* USER CODE END USART3_Init 2 */
+
+}
+
+/**
+  * Enable DMA controller clock
+  */
+static void MX_DMA_Init(void)
+{
+
+  /* DMA controller clock enable */
+  __HAL_RCC_DMA1_CLK_ENABLE();
+
+  /* DMA interrupt init */
+  /* DMA1_Stream0_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Stream0_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Stream0_IRQn);
 
 }
 

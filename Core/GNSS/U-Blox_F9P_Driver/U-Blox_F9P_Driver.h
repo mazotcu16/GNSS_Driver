@@ -184,7 +184,7 @@ typedef struct {
 	U_Blox_Payload payload;
 } U_Blox_frame_high_layer;
 
-
+void U_Blox_Receive_5_Byte(uint8_t * data);
 void U_Blox_Set_Frame(U_Blox_frame_high_layer* U_blox_Frame);
 void U_Blox_Get_Package(U_Blox_frame_high_layer* U_Blox_frame_high_layer_t);
 uint8_t U_Blox_Send_Frame();
@@ -196,4 +196,6 @@ void U_Blox_Init();
 uint8_t U_Blox_Is_Packet_Ready_To_Send(void);
 void U_Blox_Send_Packet();
 uint8_t U_Blox_Is_Packet_Ready();
+uint16_t GetRxBufferIndex();
+void RxBufferDeletePackage(uint16_t size);
 #endif /* U_BLOX_F9P_DRIVER_U_BLOX_F9P_DRIVER_H_ */

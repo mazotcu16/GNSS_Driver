@@ -13,7 +13,7 @@ int b = 0;
 static uint32_t zaman;
 void GNSS_Tanimla(GNSS *GNSS_t) {
 	U_Blox_Init();
-	for (int i = 0; i < 26; i++) {
+	/*for (int i = 0; i < 26; i++) {
 		U_Blox_frame_tx.payload.data[i] = 0;
 	}
 	U_Blox_frame_tx.message_class = UBX_MESSAGE_CLASS_CFG; //config classi
@@ -33,12 +33,14 @@ void GNSS_Tanimla(GNSS *GNSS_t) {
 	U_Blox_frame_tx.payload.U_Blox_Payload_Cfg_Prt_t.in_Proto_Mask_t.bit_s.in_Ubx_u1 =
 			1;
 	U_Blox_frame_tx.payload.U_Blox_Payload_Cfg_Prt_t.out_Proto_Mask_t.bit_s.out_Ubx_u1 =
-		1;
+			1;
 	U_Blox_frame_tx.payload.U_Blox_Payload_Cfg_Prt_t.port_id = 1;
 	U_Blox_frame_tx.length = UBX_CFG_PRT_LEN;
-	U_Blox_Set_Frame(&U_Blox_frame_tx);
-	U_Blox_Send_Frame();
+	//U_Blox_Set_Frame(&U_Blox_frame_tx);
+	//U_Blox_Send_Frame();
 	//while(!U_Blox_Is_Packet_Ready());
+	 *
+	 */
 	GNSS_t->SM = SM_GNSS_WAIT_FOR_REPLY;
 	GNSS_t->onceki_durum = SM_GNSS_IDLE;
 	zaman = SystickGetMs();
@@ -111,11 +113,11 @@ void GNSS_Gorev(GNSS *GNSS_t) {
 		U_Blox_frame_tx.payload.U_Blox_Payload_Cfg_Prt_t.port_id = 1;
 		U_Blox_frame_tx.length = UBX_CFG_PRT_LEN;
 		U_Blox_Set_Frame(&U_Blox_frame_tx);
-        U_Blox_Send_Frame();
+		U_Blox_Send_Frame();
 		static uint32_t zamanlama;
 		zamanlama = SystickGetMs();
-		GNSS_t->SM=SM_GNSS_WAIT_FOR_REPLY;
-		GNSS_t->onceki_durum=SM_GNSS_IDLE;
+		GNSS_t->SM = SM_GNSS_WAIT_FOR_REPLY;
+		GNSS_t->onceki_durum = SM_GNSS_IDLE;
 		break;
 	case SM_GNSS_NO_REPLY:
 
@@ -156,7 +158,8 @@ void GNSS_Gorev(GNSS *GNSS_t) {
 							U_Blox_frame_rx.payload.U_Blox_Payload_Nav_Pvt_t.year;
 					GNSS_t->saniye =
 							U_Blox_frame_rx.payload.U_Blox_Payload_Nav_Pvt_t.sec;
-					GNSS_t->saat=U_Blox_frame_rx.payload.U_Blox_Payload_Nav_Pvt_t.hour;
+					GNSS_t->saat =
+							U_Blox_frame_rx.payload.U_Blox_Payload_Nav_Pvt_t.hour;
 					GNSS_t->SM = SM_GNSS_SEND;
 				}
 			} else if (SystickCheckMs(zamanlama, 1500)) {
