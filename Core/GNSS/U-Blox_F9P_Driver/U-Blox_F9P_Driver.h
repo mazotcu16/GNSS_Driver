@@ -185,7 +185,7 @@ typedef struct {
 } U_Blox_frame_high_layer;
 
 void U_Blox_Receive_5_Byte(uint8_t * data);
-void U_Blox_Set_Frame(U_Blox_frame_high_layer* U_blox_Frame);
+void U_Blox_Set_Frame(U_Blox_frame_high_layer* U_Blox_frame_high_layer_t);
 void U_Blox_Get_Package(U_Blox_frame_high_layer* U_Blox_frame_high_layer_t);
 uint8_t U_Blox_Send_Frame();
 void U_Blox_Receive_Data(uint8_t data);
