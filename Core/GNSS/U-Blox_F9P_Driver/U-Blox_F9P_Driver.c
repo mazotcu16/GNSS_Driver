@@ -121,16 +121,14 @@ void U_Blox_Task() {
 }
 
 void U_Blox_Set_Frame(U_Blox_frame_high_layer *U_Blox_frame_high_layer_t) {
-	U_Blox_frame_low_layer_transmit.sync_char_1 = 0xB5;
-	U_Blox_frame_low_layer_transmit.sync_char_2 = 0x62;
-	U_Blox_frame_low_layer_transmit.length = U_Blox_frame_high_layer_t->length;
-	U_Blox_frame_low_layer_transmit.message_class = U_Blox_frame_high_layer_t->message_class;
-	U_Blox_frame_low_layer_transmit.message_id = U_Blox_frame_high_layer_t->message_id;
-	memcpy(&U_Blox_frame_low_layer_transmit.payload, U_Blox_frame_high_layer_t->payload.data,
-			U_Blox_frame_high_layer_t->length);
-	(*(uint16_t*) &U_Blox_frame_low_layer_transmit.payload[U_Blox_frame_low_layer_transmit.length]) =
-			U_Blox_Calculate_Checksum(&U_Blox_frame_low_layer_transmit);
-	memset(&U_Blox_frame_high_layer_t->payload, 0, 500);
+	U_Blox_frame_low_layer *U_Blox_frame_low_layer_t=(U_Blox_frame_low_layer*)U_Blox_Tx.Buffer;
+	U_Blox_frame_low_layer_t->sync_char_1=0xB5;
+	U_Blox_frame_low_layer_t->sync_char_2=0x62;
+	U_Blox_frame_low_layer_t->message_id=U_Blox_frame_high_layer_t->message_id;
+	U_Blox_frame_low_layer_t->message_class=U_Blox_frame_high_layer_t->message_class;
+    U_Blox_frame_low_layer_t->length=U_Blox_frame_high_layer_t->length;
+    memcpy(U_Blox_frame_low_layer_t->payload,U_Blox_frame_high_layer_t->payload.data,U_Blox_frame_high_layer_t->length);
+    (*(uint16_t*)&U_Blox_frame_low_layer_t->payload[U_Blox_frame_low_layer_t->length])=U_Blox_Calculate_Checksum(U_Blox_frame_low_layer_t);
 	U_Blox_Tx.Sm = SM_TX_PREPARE;
 }
 uint8_t U_Blox_Send_Frame() {

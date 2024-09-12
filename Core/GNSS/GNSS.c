@@ -36,8 +36,10 @@ void GNSS_Tanimla(GNSS *GNSS_t) {
 			1;
 	U_Blox_frame_tx.payload.U_Blox_Payload_Cfg_Prt_t.port_id = 1;
 	U_Blox_frame_tx.length = UBX_CFG_PRT_LEN;
-	U_Blox_Set_Frame(&U_Blox_frame_tx);
-	U_Blox_Send_Frame();
+	if (U_Blox_Is_Packet_Ready_To_Send()) {
+		U_Blox_Set_Frame(&U_Blox_frame_tx);
+		U_Blox_Send_Packet();
+	}
 	//while(!U_Blox_Is_Packet_Ready());
 
 	GNSS_t->SM = SM_GNSS_WAIT_FOR_REPLY;
@@ -111,8 +113,10 @@ void GNSS_Gorev(GNSS *GNSS_t) {
 				1;
 		U_Blox_frame_tx.payload.U_Blox_Payload_Cfg_Prt_t.port_id = 1;
 		U_Blox_frame_tx.length = UBX_CFG_PRT_LEN;
-		U_Blox_Set_Frame(&U_Blox_frame_tx);
-		U_Blox_Send_Frame();
+		if (U_Blox_Is_Packet_Ready_To_Send()) {
+			U_Blox_Set_Frame(&U_Blox_frame_tx);
+			U_Blox_Send_Packet();
+		}
 		static uint32_t zamanlama;
 		zamanlama = SystickGetMs();
 		GNSS_t->SM = SM_GNSS_WAIT_FOR_REPLY;
@@ -171,8 +175,10 @@ void GNSS_Gorev(GNSS *GNSS_t) {
 		U_Blox_frame_tx.message_class = UBX_MESSAGE_CLASS_NAV;
 		U_Blox_frame_tx.message_id = UBX_MESSAGE_ID_PVT;
 		U_Blox_frame_tx.length = 0;
-		U_Blox_Set_Frame(&U_Blox_frame_tx);
-		U_Blox_Send_Frame();
+		if (U_Blox_Is_Packet_Ready_To_Send()) {
+			U_Blox_Set_Frame(&U_Blox_frame_tx);
+			U_Blox_Send_Packet();
+		}
 		GNSS_t->SM = SM_GNSS_WAIT_FOR_REPLY;
 		zamanlama = SystickGetMs();
 		break;
